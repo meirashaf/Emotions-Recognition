@@ -32,7 +32,9 @@ class FER2013(Dataset):
         assert mode in ['train', 'val', 'test']
         self.mode = mode
 
-        self.csv_path = os.path.join(self.root, 'fer2013.csv')
+        # self.csv_path = os.path.join(self.root, 'fer2013.csv')
+        # self.csv_path = "C:\\SHAFA\\Ngoding\\SKRIPSI-ngoding\\AAA_DATASET\\fer2013-imed.csv"
+        self.csv_path = "/content/fer2013-imed.csv"
         self.df = pd.read_csv(self.csv_path)
         # print(self.df)
 

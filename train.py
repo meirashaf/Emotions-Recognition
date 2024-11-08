@@ -14,7 +14,7 @@ from tqdm import tqdm
 import torch
 import torch.nn as nn
 import torch.optim
-import torch.utils.tensorboard as tensorboard
+# import torch.utils.tensorboard as tensorboard
 import torch.backends.cudnn as cudnn
 cudnn.benchmark = True
 cudnn.enabled = True
@@ -29,7 +29,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--epochs', type=int, default=300, help='num of training epochs')
     parser.add_argument('--batch_size', type=int, default=15, help="training batch size")
-    parser.add_argument('--tensorboard', type=str, default='checkpoint/tensorboard', help='path log dir of tensorboard')
+    # parser.add_argument('--tensorboard', type=str, default='checkpoint/tensorboard', help='path log dir of tensorboard')
     parser.add_argument('--logging', type=str, default='checkpoint/logging', help='path of logging')
     parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
     parser.add_argument('--weight_decay', type=float, default=1e-6, help='optimizer weight decay')
@@ -49,12 +49,14 @@ def parse_args():
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 args = parse_args()
 # logging
+log_file_path = os.path.join(args.logdir, "train_log.log")
+
 logging.basicConfig(
 format='[%(message)s',
 level=logging.INFO,
 handlers=[logging.FileHandler(args.logdir, mode='w'), logging.StreamHandler()])
 # tensorboard
-writer = tensorboard.SummaryWriter(args.tensorboard)
+# writer = tensorboard.SummaryWriter(args.tensorboard)
 
 def main():
     # ========= dataloaders ===========
@@ -106,13 +108,15 @@ def main():
         logging.info(f'\tAccuracy = {accuracy*100} % .. Percision = {percision*100} % .. Recall = {recall*100} % \n')
         time.sleep(2)
         # ============= tensorboard =============
-        writer.add_scalar('train_loss',train_loss, epoch)
-        writer.add_scalar('val_loss',val_loss, epoch)
-        writer.add_scalar('percision',percision, epoch)
-        writer.add_scalar('recall',recall, epoch)
-        writer.add_scalar('accuracy',accuracy, epoch)
+        # writer.add_scalar('train_loss',train_loss, epoch)
+        # writer.add_scalar('val_loss',val_loss, epoch)
+        # writer.add_scalar('percision',percision, epoch)
+        # writer.add_scalar('recall',recall, epoch)
+        # writer.add_scalar('accuracy',accuracy, epoch)
         # ============== save model =============
         if epoch % args.savefreq == 0:
+            os.makedirs(args.savepath, exist_ok=True)
+
             checkpoint_state = {
                 'mini_xception': mini_xception.state_dict(),
                 "epoch": epoch
@@ -121,7 +125,7 @@ def main():
             torch.save(checkpoint_state, savepath)
             print(f'\n\t*** Saved checkpoint in {savepath} ***\n')
             time.sleep(2)
-    writer.close()
+    # writer.close()
 
 def train_one_epoch(model, criterion, optimizer, dataloader, epoch):
     model.train()
