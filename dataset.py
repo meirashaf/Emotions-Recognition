@@ -64,8 +64,8 @@ class FER2013(Dataset):
 
     def __len__(self) -> int:
         return self.df.index.size
-def get_labels(self):
-        return self.df['label'].tolist()
+    def get_labels(self):
+            return self.df['label'].tolist()
 
 def create_train_dataloader(root='../data', batch_size=64):
     dataset = FER2013(root, mode='train', transform=get_transforms())
