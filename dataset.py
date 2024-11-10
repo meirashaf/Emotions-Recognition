@@ -14,6 +14,7 @@ import numpy as np
 import torch
 
 from utils import get_label_emotion, normalization, histogram_equalization, standerlization, normalize_dataset_mode_1, normalize_dataset_mode_255, get_transforms
+from torchsampler import ImbalancedDatasetSampler
 
 class FER2013(Dataset):
     """
@@ -67,19 +68,22 @@ class FER2013(Dataset):
 
 def create_train_dataloader(root='../data', batch_size=64):
     dataset = FER2013(root, mode='train', transform=get_transforms())
-    dataloader = DataLoader(dataset, batch_size, shuffle=True)
+    sample=ImbalancedDatasetSampler(dataset)
+    dataloader = DataLoader(dataset, sample, batch_size, shuffle=True)
     return dataloader
 
 def create_val_dataloader(root='../data', batch_size=2):
     dataset = FER2013(root, mode='val', transform=transforms.ToTensor())
-    dataloader = DataLoader(dataset, batch_size, shuffle=False)
+    sample=ImbalancedDatasetSampler(dataset)
+    dataloader = DataLoader(dataset, sample, batch_size, shuffle=False)
     return dataloader
 
 def create_test_dataloader(root='../data', batch_size=1):
     # transform = transforms.ToTensor()
     transform = get_transforms()
     dataset = FER2013(root, mode='test', transform=transform)
-    dataloader = DataLoader(dataset, batch_size, shuffle=False)
+    sample=ImbalancedDatasetSampler(dataset)
+    dataloader = DataLoader(dataset, sample, batch_size, shuffle=False)
     return dataloader
 
 def calculate_dataset_mean_std(dataset:FER2013):

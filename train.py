@@ -54,7 +54,7 @@ log_file_path = os.path.join(args.logdir, "train_log.log")
 logging.basicConfig(
 format='[%(message)s',
 level=logging.INFO,
-handlers=[logging.FileHandler(args.logdir, mode='w'), logging.StreamHandler()])
+handlers=[logging.FileHandler(log_file_path, mode='w'), logging.StreamHandler()])
 # tensorboard
 # writer = tensorboard.SummaryWriter(args.tensorboard)
 
