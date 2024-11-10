@@ -71,14 +71,15 @@ def create_train_dataloader(root='../data', batch_size=64):
     dataset = FER2013(root, mode='train', transform=get_transforms())
     sample=ImbalancedDatasetSampler(dataset)
     # dataloader = DataLoader(dataset, sample, batch_size, shuffle=True)
-    print(batch_size)
-    dataloader = DataLoader(dataset, batch_size, sample )
+    # print(batch_size)
+    dataloader = DataLoader(dataset, batch_size, sample)
     return dataloader
 
 def create_val_dataloader(root='../data', batch_size=2):
     dataset = FER2013(root, mode='val', transform=transforms.ToTensor())
     sample=ImbalancedDatasetSampler(dataset)
-    dataloader = DataLoader(dataset, sample, batch_size, shuffle=False)
+    # dataloader = DataLoader(dataset, sample, batch_size, shuffle=False)
+    dataloader = DataLoader(dataset, batch_size, sample)
     return dataloader
 
 def create_test_dataloader(root='../data', batch_size=1):
@@ -86,7 +87,8 @@ def create_test_dataloader(root='../data', batch_size=1):
     transform = get_transforms()
     dataset = FER2013(root, mode='test', transform=transform)
     sample=ImbalancedDatasetSampler(dataset)
-    dataloader = DataLoader(dataset, sample, batch_size, shuffle=False)
+    # dataloader = DataLoader(dataset, sample, batch_size, shuffle=False)
+    dataloader = DataLoader(dataset, batch_size, sample)
     return dataloader
 
 def calculate_dataset_mean_std(dataset:FER2013):
