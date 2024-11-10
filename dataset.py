@@ -19,10 +19,10 @@ from torchsampler import ImbalancedDatasetSampler
 class FER2013(Dataset):
     """
     FER2013 format:
-        index   emotion     pixels      Usage
+        index   label     pixels      Usage
 
     index: id of series
-    emotion: label (from 0 - 6)
+    label: label (from 0 - 6)
     pixels: 48x48 pixel value (uint8)
     Usage: [Training, PrivateTest, PublicTest]    
     """
@@ -48,7 +48,7 @@ class FER2013(Dataset):
 
     def __getitem__(self, index: int):
         data_series = self.df.iloc[index]
-        emotion = data_series['emotion']
+        label = data_series['label']
         pixels  = data_series['pixels']
 
         # to numpy
@@ -60,7 +60,7 @@ class FER2013(Dataset):
             # face = normalization(face)
             face = self.transform(face)
 
-        return face, emotion
+        return face, label
 
     def __len__(self) -> int:
         return self.df.index.size
@@ -134,8 +134,8 @@ if __name__ == '__main__':
  
     for i in range(len(dataset)):
 
-        face, emotion = dataset[i]
-        # print('emotion',emotion)
+        face, label = dataset[i]
+        # print('label',label)
         # print('shape',face.shape)
         face = np.copy(face)
         print(f"before min:{np.min(face)}, max:{np.max(face)}, mean:{np.mean(face)}, std:{np.std(face)}")
@@ -145,7 +145,7 @@ if __name__ == '__main__':
         print(f"after min:{np.min(face)}, max:{np.max(face)}, mean:{np.mean(face)}, std:{np.std(face)}\n")
 
         face = cv2.resize(face, (200,200))
-        cv2.putText(face, get_label_emotion(emotion), (0,20), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255))
+        cv2.putText(face, get_label_emotion(label), (0,20), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255))
         cv2.imshow('face', face)
 
         face1 = cv2.resize(face1, (200,200))
