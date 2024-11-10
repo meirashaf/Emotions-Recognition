@@ -71,7 +71,7 @@ def create_train_dataloader(root='../data', batch_size=64):
     dataset = FER2013(root, mode='train', transform=get_transforms())
     sample=ImbalancedDatasetSampler(dataset)
     # dataloader = DataLoader(dataset, sample, batch_size, shuffle=True)
-    dataloader = DataLoader(dataset, sample, batch_size)
+    dataloader = DataLoader(dataset, sample, batch_size=64)
     return dataloader
 
 def create_val_dataloader(root='../data', batch_size=2):
