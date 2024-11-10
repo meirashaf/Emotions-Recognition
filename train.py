@@ -60,7 +60,8 @@ handlers=[logging.FileHandler(log_file_path, mode='w'), logging.StreamHandler()]
 
 def main():
     # ========= dataloaders ===========
-    train_dataloader = create_train_dataloader(root=args.datapath, batch_size=args.batch_size)
+    # train_dataloader = create_train_dataloader(root=args.datapath, batch_size=args.batch_size)
+    train_dataloader = create_train_dataloader(root=args.datapath)
     test_dataloader = create_val_dataloader(root=args.datapath, batch_size=args.batch_size)
     # train_dataloader, test_dataloader = create_CK_dataloader(batch_size=args.batch_size)
     start_epoch = 0
