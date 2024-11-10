@@ -72,7 +72,7 @@ def create_train_dataloader(root='../data', batch_size=64):
     sample=ImbalancedDatasetSampler(dataset)
     # dataloader = DataLoader(dataset, sample, batch_size, shuffle=True)
     print(batch_size)
-    dataloader = DataLoader(dataset, sample, batch_size)
+    dataloader = DataLoader(dataset, batch_size, sample )
     return dataloader
 
 def create_val_dataloader(root='../data', batch_size=2):
