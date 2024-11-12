@@ -19,6 +19,7 @@ import torch.optim
 import torch.backends.cudnn as cudnn
 cudnn.benchmark = True
 cudnn.enabled = True
+from google.colab import files
 
 from model.model import Mini_Xception
 from dataset import create_train_dataloader, create_val_dataloader, create_test_dataloader
@@ -125,6 +126,8 @@ def main():
             savepath = os.path.join(args.savepath, f'weights_epoch_{epoch}.pth.tar')
             torch.save(checkpoint_state, savepath)
             print(f'\n\t*** Saved checkpoint in {savepath} ***\n')
+            files.download('/content/checkpoint/logging/train_log.log')
+            files.download(f'/content/checkpoint/model_weights/weights_epoch_{epoch}.pth.tar')
             time.sleep(2)
     # writer.close()
 
