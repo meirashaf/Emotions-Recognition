@@ -128,7 +128,7 @@ def main():
             print(f'\n\t*** Saved checkpoint in {savepath} ***\n')
             # files.download('/content/checkpoint/logging/train_log.log')
             # files.download(f'/content/checkpoint/model_weights/weights_epoch_{epoch}.pth.tar')
-            if epoch == 50:
+            if epoch == 100:
                 break
             time.sleep(2)
     # writer.close()
