@@ -8,6 +8,7 @@ import numpy as np
 import argparse, cv2
 import logging
 import time
+import datetime
 import os
 from tqdm import tqdm
 
@@ -203,7 +204,13 @@ def validate(model, criterion, dataloader, epoch):
         return val_loss, accuracy, percision, recall
 
 if __name__ == "__main__":
+    start_time = time.time()
+
     main()
+    
+    total_time = time.time() - start_time
+    total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+    print('Training time {}'.format(total_time_str))
     # total_labels = [0, 1, 2, 0]
     # total_pred =   [0, 2, 1, 2]
     # avg = None
